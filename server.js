@@ -1,0 +1,37 @@
+const http = require("http");
+const url = require("url");
+const fs = require("fs");
+const router = require("./router/route");
+const finalhandler = require("finalhandler");
+
+let mimeTypes = {
+  jpg: "images/jpg",
+  png: "images/png",
+  js: "text/javascript",
+  css: "text/css",
+  svg: "image/svg+xml",
+  ttf: "font/ttf",
+  woff: "font/woff",
+  woff2: "font/woff2",
+  eot: "application/vnd.ms-fontobject",
+};
+
+let server = http.createServer((req, res) => {
+  var parseUrl = url.parse(req.url, true);
+  var path = parseUrl.pathname;
+  var trimPath = path.replace(/^\/+|\/+$/g, "");
+  const filesDefences = trimPath.match(
+    /\.js|\.css|\.png|\.svg|\.jpg|\.ttf|\.woff|\.woff2|\.eot/
+  );
+  if (filesDefences) {
+    const extension = mimeTypes[filesDefences[0].toString().split(".")[1]];
+    res.writeHead(200, { "Content-Type": extension });
+    fs.createReadStream(__dirname + req.url).pipe(res);
+  } else {
+    router(req, res, finalhandler(req, res));
+  }
+});
+
+server.listen(3000, function () {
+  console.log("server running at http://localhost:3000");
+});
