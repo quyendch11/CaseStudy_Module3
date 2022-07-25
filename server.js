@@ -30,7 +30,6 @@ let server = http.createServer((req, res) => {
   } else {
     router(req, res, finalhandler(req, res));
   }
-  //
 });
 
 server.listen(3000, function () {
