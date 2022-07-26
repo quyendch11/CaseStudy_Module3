@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>edit Cost</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+</head>
+<body>
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-title">
+            <div class="row">
+                <h3>Edit Cost</h3>
+                <hr>
+            </div>
+        </div>
+        <div class="card-body">
+            <form action="/costcategories/edit/{id}" method="post">
+                <div class="mb-3">
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="costdate" class="form-label">costdate</label>
+                            <input type="date" name="costdate" class="form-control" id="costdate" value="{costdate}">
+                        </div>
+                        <div class="col-6">
+                            <label for="note" class="form-label">note</label>
+                            <input type="text" name="note" class="form-control" id="note" value="{note}">
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="weeklimit" class="form-label">week limit</label>
+                            <input type="text" name="weeklimit" class="form-control" id="weeklimit" value="{weeklimit}">
+                        </div>
+                        <div class="col-6">
+                            <label for="monthlimit" class="form-label">month limit</label>
+                            <input type="text" name="monthlimit" class="form-control" id="monthlimit" value="{monthlimit}">
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="money" class="form-label">money</label>
+                            <input type="text" name="money" class="form-control" id="money" value="{money}">
+                        </div>
+                        <div class="col-6">
+                            <label for="daylimit" class="form-label">day limit</label>
+                            <input type="text" name="daylimit" class="form-control" id="daylimit" value="{daylimit}">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <label for="userid" class="form-label">userid</label>
+                        <input type="text" name="userid" class="form-control" id="userid" value="{userid}">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+        crossorigin="anonymous"></script>
+</body>
+</html>
