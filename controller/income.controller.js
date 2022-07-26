@@ -33,6 +33,18 @@ class IncomesController {
             }
         })
     }
+    showIncomesForm(){
+        fs.readFile('.view/client/income/create.html', (err, data) => {
+            if (err) {
+                console.log(err);
+            }
+            else{
+                res.writeHead(200, { 'Content-Type': 'text/html' });
+                res.write(data);
+                res.end();
+            }
+        });
+    };
     
 }
 module.exports = IncomesController;
