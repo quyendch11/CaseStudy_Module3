@@ -13,4 +13,7 @@ router.get("/", homeController.showHomePage);
 //dashboard page
 router.get("/dashboard", dashboardController.showPage);
 router.get("/incomesList",incomesController.showIncomesList)
+router.get("/incomesList/create", incomesController.showIncomesForm);
+router.post("/incomeList/create",incomesController.createIncomeForm);
+
 module.exports = router;

@@ -25,7 +25,7 @@ class Incomes {
     };
     createIncomes() {
         let insertQuery = /*html*/`INSERT INTO Incomes (note,money,incomedate)
-                            value('${incomes.note},${incomes.money},${incomes.incomedate}')`;
+                            values('${incomes.note},${incomes.money},${incomes.incomedate}')`;
         this.connection.query(insertQuery, (err, data) => {
             if (err) {
                 console.log(err);

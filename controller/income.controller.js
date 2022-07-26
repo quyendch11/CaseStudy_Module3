@@ -15,7 +15,7 @@ class IncomesController {
             else {
                 let incomesList = await incomes.getIncomesList()
                 let tbody = ''
-              
+
                 incomesList.map((incomes, index) => {
                     tbody += /*html*/`</tr>
                     <td>${index + 1}</td>
@@ -33,18 +33,32 @@ class IncomesController {
             }
         })
     }
-    showIncomesForm(){
-        fs.readFile('.view/client/income/create.html', (err, data) => {
+    showIncomesForm(req, res) {
+        fs.readFile('view/client/income/create.html', 'utf-8', (err, data) => {
             if (err) {
                 console.log(err);
             }
-            else{
+            else {
                 res.writeHead(200, { 'Content-Type': 'text/html' });
                 res.write(data);
-                res.end();
+                return res.end();
             }
         });
     };
-    
+    createIncomeForm(req, res) {
+        let data = '';
+        req.on('data', chunk => {
+            data += chunk;
+        })
+        req.on('end', () => {
+            let income = qs.parse(data);
+            incomes.createIncomeForm(income);
+            res.writeHead(301, {
+                location: '/incomeList'
+            });
+            return res.end();
+        })
+    };
+
 }
 module.exports = IncomesController;
