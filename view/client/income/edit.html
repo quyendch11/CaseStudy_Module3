@@ -28,40 +28,30 @@
                 </div>
             </div>
             <div class="card-body">
-                <form action="/incomesList/create" method="post">
+                <form action="/incomesList/edit/{id}" method="post">
                     <div class="mb-3">
                         <div class="row">
                             <div class="col-md-4">
                                 <label for="incomedate" class="form-label">Date of creation</label>
-                                <input type="date" name="incomedate" class="form-control" id="incomedate">
+                                <input type="date" name="incomedate" class="form-control" id="incomedate" value="{incomedate}">
                             </div>
                             <div class="col-md-4">
                                 <label for="note" class="form-label">Source</label>
-                                <input type="text" name="note" class="form-control" id="note">
+                                <input type="text" name="note" class="form-control" id="note" value="{note}">
                             </div>
                             <div class="col-md-4">
                                 <label for="incomeCategorieid" class="form-label">CategoryInComme</label>
-                                <select name="incomeCategorieid" id="incomeCategorieid" >
+                                <select name="incomeCategorieid" id="incomeCategorieid" value="incomeCategorieid">
                                     {item-category}
                                 </select>
                             </div>
-                            <!-- <div class="col-md-4">
-                                <label for="userid" class="form-label">Userid</label>
-                                <input name="userid" id="userid" class="form-control">
-                                </input>
-                            </div> -->
                             <div class=" col-md-4">
                                 <label for="money" class="form-label">Money</label>
-                                <input name="money" class="form-control" id="money" cols="30" rows="10"></input>
+                                <input name="money" class="form-control" id="money" value="{money}"></input>
                             </div>
                         </div>
-
-
-
                     </div>
-
-                    <button type="submit" class="btn btn-primary">Submit</button>
-
+                    <button type="submit" class="btn btn-primary">Edit</button>
                 </form>
             </div>
         </div>

@@ -14,6 +14,9 @@ router.get("/", homeController.showHomePage);
 router.get("/dashboard", dashboardController.showPage);
 router.get("/incomesList",incomesController.showIncomesList)
 router.get("/incomesList/create", incomesController.showIncomesForm);
-router.post("/incomeList/create",incomesController.createIncomeForm);
+router.post("/incomesList/create",incomesController.createIncomeForm);
+router.get("/incomesList/edit/:id", incomesController.showEditIncomeForm);
+router.post("/incomesList/edit/:id", incomesController.editIncome);
+router.get("/incomesList/delete/:id",incomesController.delete);
 
 module.exports = router;
