@@ -77,14 +77,16 @@ class Incomes {
         });
     }
     deleteLineOfIncomes(id) {
-        let query = /*html*/ `delete  from incomes where id=${id}`;
-        console.log(query);
         return new Promise((resolve, reject) => {
+        let query = /*html*/ `delete  from incomes where id=${id}`;
+        
             this.connection.query((query), (err, data) => {
                 if (err) {
                     reject(err);
                 }
+                console.log('Delete successfully');
                 resolve(data);
+                
             });
         });
     }

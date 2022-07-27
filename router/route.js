@@ -18,5 +18,4 @@ router.post("/incomesList/create",incomesController.createIncomeForm);
 router.get("/incomesList/edit/:id", incomesController.showEditIncomeForm);
 router.post("/incomesList/edit/:id", incomesController.editIncome);
 router.get("/incomesList/delete/:id",incomesController.delete);
-
 module.exports = router;

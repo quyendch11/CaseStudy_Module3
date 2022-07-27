@@ -23,7 +23,7 @@ class IncomesController {
                     <td>${incomes.money}</td>
                     <td>${incomes.incomedate}</td>
                     <td><a href="/incomesList/edit/${incomes.id}" class="btn btn-primary">Edit</a></td>
-                    <td><a href="/incomesList/delete/${incomes.id}" class="btn btn-danger">Delete</a></td>
+                    <td ><a href="/incomesList/delete/${incomes.id}" class="btn btn-danger" >Delete</a></td>
                   </tr>`
                 });
                 data = data.replace('{incomesList}', tbody);
@@ -33,6 +33,7 @@ class IncomesController {
             }
         })
     }
+
     showIncomesForm(req, res) {
         fs.readFile('view/client/income/create.html', 'utf-8', (err, data) => {
             if (err) {
@@ -115,29 +116,40 @@ class IncomesController {
         req.on('end', async () => {
             let income = qs.parse(data);
 
-            console.log(income);
+            // console.log(income);
 
             await incomes.updateEdit(id, income);
             res.writeHead(301, {
                 location: '/incomesList'
             });
-        return res.end();
+            return res.end();
 
         })
 
     };
-    delete(req, res) {
+   async delete(req, res) {
         let id = req.params.id;
         console.log(id);
-        req.on('end', async () => {
-
-            await incomes.deleteLineOfIncomes(id);
-            res.writeHead(301, {
-                location: '/incomesList'
-            });
+       await incomes.deleteLineOfIncomes(id)
+        res.writeHead(301, {
+            location: '/incomesList'
+        });
         return res.end();
 
-        })
-    }
+ 
+
+
+};
+    // delete(req, res) {
+    //     let id = req.params.id;
+
+    //     req.on('end', async () => {
+    //         await incomes.deleteLineOfIncomes(id);
+    //         res.writeHead(301, {
+    //             location: '/incomesList'
+    //         });
+    //         return res.end();
+    //     })
+    // }
 };
 module.exports = IncomesController;
