@@ -23,7 +23,7 @@ class IncomesController {
                     <td>${incomes.money}</td>
                     <td>${incomes.incomedate}</td>
                     <td><a href="/incomesList/edit/${incomes.id}" class="btn btn-primary">Edit</a></td>
-                    <td ><a href="/incomesList/delete/${incomes.id}" class="btn btn-danger" onclick ="confirm ('Do you want to delete this?')">Delete</a></td>
+                    <td ><a href="/incomesList/delete/${incomes.id}" class="btn btn-danger" >Delete</a></td>
                   </tr>`
                 });
                 data = data.replace('{incomesList}', tbody);
@@ -127,10 +127,10 @@ class IncomesController {
         })
 
     };
-    async delete(req, res) {
+    delete(req, res) {
         let id = req.params.id;
         console.log(id);
-        await incomes.deleteLineOfIncomes(id)
+        incomes.deleteLineOfIncomes(id)
         res.writeHead(301, {
             location: '/incomesList'
         });
