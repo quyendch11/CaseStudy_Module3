@@ -1,6 +1,6 @@
 const fs = require("fs");
 const qs = require("qs");
-const UserModel = require("../model/user.model");
+const UserModel = require("../../model/user.model");
 let bcrypt = require("bcrypt");
 var cookie = require("cookie");
 const userModel = new UserModel();
@@ -82,7 +82,7 @@ class UserController {
             })
           );
           res.writeHead(301, { Location: "/" });
-          res.end(JSON.stringify(user));
+          res.end();
         });
       }
     });
