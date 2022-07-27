@@ -20,6 +20,7 @@ class Incomes {
                     reject(err);
                 }
                 resolve(data);
+                console.log(data);
             });
         });
     };
