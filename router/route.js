@@ -17,7 +17,7 @@ router.get(
   userController.readSession,
   dashboardController.showPage
 );
-
+//register
 router.get("/register", userController.showRegisterPage);
 
 router.get("/login", userController.showLoginPage);
