@@ -34,11 +34,21 @@ class Incomes {
             });
         });
     }
-    async createIncomes(income) {
+    createIncomes(income) {
         let insertQuery = /*html*/`INSERT INTO Incomes (incomedate,note,money,userid,incomeCategorieid)
-                            values('${income.incomedate}','${income.note}',${income.money},${1},${income.incomeCategorieid})`;
+                values('${income.incomedate}','${income.note}',${income.money},${1},${ income.incomeCategorieid})`;
+        return new Promise((resolve, reject) => {
+           this.connection.query(insertQuery, (err, data) => {
+            if (err) {
+                reject(err);
+            }
+            else{
+                resolve(data);
+            }
+           });
+            
+        });
 
-        return await this.query(insertQuery)
     };
 
     async getCategoryIncome() {
@@ -48,7 +58,7 @@ class Incomes {
 
     getId(id) {
 
-        let query = /*html*/ `select * from incomes where id = ${id}`;
+        let query = `select * from incomes where id = ${id}`;
         return new Promise((resolve, reject) => {
             this.connection.query(query, (err, data) => {
                 if (err) {
@@ -78,15 +88,15 @@ class Incomes {
     }
     deleteLineOfIncomes(id) {
         return new Promise((resolve, reject) => {
-        let query = /*html*/ `delete  from incomes where id=${id}`;
-        
+            let query = /*html*/ `delete  from incomes where id=${id}`;
+
             this.connection.query((query), (err, data) => {
                 if (err) {
                     reject(err);
                 }
                 console.log('Delete successfully');
                 resolve(data);
-                
+
             });
         });
     }

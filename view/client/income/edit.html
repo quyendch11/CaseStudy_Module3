@@ -1,64 +1,71 @@
-<!doctype html>
-<html lang="en">
+<div class="m-grid__item m-grid__item--fluid m-wrapper">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Income Management</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-</head>
+    <!-- END: Subheader -->
+    <div class="m-content">
+        <div class="row">
+            <div class="col-md-12">
 
-<body>
-    <div class="container-fluid">
-        <nav class="navbar navbar-expand-lg bg-light">
-            <div class="container-fluid">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-            </div>
-        </nav>
-        <div class="card">
-            <div class="card-title">
-                <div class="row">
-                    <h3>Create</h3>
-                    <hr>
-                </div>
-            </div>
-            <div class="card-body">
-                <form action="/incomesList/edit/{id}" method="post">
-                    <div class="mb-3">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label for="incomedate" class="form-label">Date of creation</label>
-                                <input type="date" name="incomedate" class="form-control" id="incomedate" value="{incomedate}">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="note" class="form-label">Source</label>
-                                <input type="text" name="note" class="form-control" id="note" value="{note}">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="incomeCategorieid" class="form-label">CategoryInComme</label>
-                                <select name="incomeCategorieid" id="incomeCategorieid" value="incomeCategorieid">
-                                    {item-category}
-                                </select>
-                            </div>
-                            <div class=" col-md-4">
-                                <label for="money" class="form-label">Money</label>
-                                <input name="money" class="form-control" id="money" value="{money}"></input>
+                <div class="m-portlet m-portlet--tab">
+                    <div class="m-portlet__head">
+                        <div class="m-portlet__head-caption">
+                            <div class="m-portlet__head-title">
+                                <span class="m-portlet__head-icon m--hide">
+                                    <i class="la la-gear"></i>
+                                </span>
+                                <h3 class="m-portlet__head-text">
+                                    Tiền thu
+                                </h3>
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Edit</button>
-                </form>
+
+                    <!--begin::Form-->
+                    <form class="m-form m-form--fit m-form--label-align-right" action="/incomesList/edit/{id}" method="post">
+                        <div class="m-portlet__body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group m-form__group">
+                                        <label for="exampleInputEmail1">Ngày</label>
+                                        <input class="form-control m-input" type="date" name="incomedate" value="{incomedate}"
+                                            id="incomedate">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group m-form__group">
+                                        <label for="exampleInputPassword1">Tiền thu</label>
+                                        <input type="text" class="form-control m-input" id="money" name="money" value="{money}">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row mt-5">
+                                <div class="col-md-6">
+                                    <div class="form-group m-form__group">
+                                        <label for="exampleInputEmail1">Danh mục</label>
+                                        <select class="form-control m-input" id="incomeCategorieid" name="incomeCategorieid" value="{incomeCategorieid}">
+                                            {item-category}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-5">
+                                <div class="col-md-12">
+                                    <div class="form-group m-form__group">
+                                        <label for="exampleTextarea">Ghi chú</label>
+                                        <textarea class="form-control m-input" id="note" rows="3" name="note" value="{note}"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-portlet__foot m-portlet__foot--fit">
+                            <div class="m-form__actions">
+                                <button type="submit" class="btn btn-primary" >Sửa</button>
+                                <button type="reset" class="btn btn-secondary">Hủy</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
-        crossorigin="anonymous"></script>
-</body>
-
-</html>
+</div>

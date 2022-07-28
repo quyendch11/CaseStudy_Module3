@@ -1,3 +1,4 @@
+const { log } = require('console');
 const fs = require('fs');
 const qs = require('qs');
 const Incomes = require('../model/income.model');
@@ -38,15 +39,15 @@ class IncomesController {
                             <td>${incomesList[index].note}</td>
                             <td>${incomesList[index].money}</td>
                             <td nowrap="">
-                                <a href="#"
+                    <a href="/incomesList/edit/${incomesList[index].id}"
                                     class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"
                                     title="View">
                                     <i class="la la-edit"></i>
                                 </a>
-                                <a href="#"
+                                <a href="/incomesList/delete/${incomesList[index].id}"
                                     class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"
-                                    title="View">
-                                    <i class="flaticon-close"></i>
+                                    title="View" onclick="return confirm('Are you sure you want to delete this item?')">
+                                    <i class="flaticon-close" ></i>
                                 </a>
                             </td>
                           </tr>`;
@@ -86,113 +87,88 @@ class IncomesController {
                     "utf-8",
                     (err, dataIncomes) => {
                         if (err) {
-                            console.log("File NotFound!");
-                        } else {
-                            
-                            //     incomes.getCategoryIncome().then((category) => {
-
-                            //     });
-
-                            //     data = data.replace('{item-category}', html)
-                            //     res.writeHead(200, { 'Content-Type': 'text/html' });
-                            //     res.write(data);
-                            //     return res.end();
-                            // }
-
-                            //         let tbody = "";
-                            //         for (let index = 0; index < incomesList.length; index++) {
-                            //             tbody += /*html */ `
-                            //       <tr role="row" class="odd active">
-                            //         <td class=" dt-right" tabindex="0">
-                            //         <label
-                            //           class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
-                            //           <input type="checkbox" value="" class="m-checkable">
-                            //           <span></span>
-                            //         </label>
-                            //         </td>
-                            //         <td>${index + 1}</td>
-                            //         <td>${incomesList[index].incomedate}</td>
-                            //         <td>${incomesList[index].note}</td>
-                            //         <td>${incomesList[index].money}</td>
-                            //         <td nowrap="">
-                            //             <a href="#"
-                            //                 class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"
-                            //                 title="View">
-                            //                 <i class="la la-edit"></i>
-                            //             </a>
-                            //             <a href="#"
-                            //                 class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"
-                            //                 title="View">
-                            //                 <i class="flaticon-close"></i>
-                            //             </a>
-                            //         </td>
-                            //       </tr>`;
-                            
-                                dataIncomes = dataIncomes.replace('{content-main}',data)
-                                res.writeHead(200, { 'Content-Type': 'text/html' });
-                                res.write(dataIncomes);
-                                return res.end();
-                            
-                            //         dataIncomes = dataIncomes.replace('{incomesList}', tbody);
-                            // data = data.replace("{content-main}", dataIncomes);
-                            // res.writeHead(200, { 'Content-type': 'text/html' });
-
-
+                            console.log(err);
                         }
-                    }
-                );
+                        else {
+                            incomes.getCategoryIncome().then((categories) => {
+                                let html = '';
+
+                                categories.forEach((category) => {
+
+                                    html += `<option value="${category.id}">${category.name}</option>`;
+                                    // console.log(category.name);
+                                })
+
+                                dataIncomes = dataIncomes.replace('{item-category}', html);
+                                data = data.replace('{content-main}', dataIncomes);
+                                res.writeHead(200, { 'Content-Type': 'text/html' });
+                                res.write(data);
+                                return res.end();
+                            }).catch(err => {
+                                console.log(err.message);
+                            });
+                        }
+                    });
             }
         });
     };
-
     createIncomeForm(req, res) {
         let data = '';
         req.on('data', chunk => {
             data += chunk;
         })
+        console.log(data);
         req.on('end', () => {
             let income = qs.parse(data);
-            incomes.createIncomes(income).then(() => {
-                res.writeHead(301, {
-                    location: '/incomesList'
-                });
-                return res.end();
-            }).catch(err => {
-                console.log(err.message);
-            })
+            console.log(income);
+            incomes.createIncomes(income);
+            res.writeHead(301, {
+                location: '/incomesList'
+            });
+            return res.end();
         })
     };
     showEditIncomeForm(req, res) {
         let idUpdate = req.params.id;
         console.log(idUpdate);
-        fs.readFile('view/client/income/edit.html', 'utf-8', async (err, data) => {
+        fs.readFile('view/client/index.html', 'utf8', (err, data) => {
             if (err) {
                 console.log(err);
             }
             else {
-                let income = await incomes.getId(idUpdate);
-                if (income.length > 0) {
-                    data = data.replace('{id}', income[0].id);
-                    data = data.replace('{incomedate}', income[0].incomedate);
-                    data = data.replace('{note}', income[0].note);
-                    data = data.replace('{money}', income[0].money);
-                }
-                incomes.getCategoryIncome().then((categories) => {
-                    let html = '';
+                fs.readFile('view/client/income/edit.html', 'utf-8', async (err, dataIncomes) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        let income = await incomes.getId(idUpdate);
+                        if (income.length > 0) {
+                            dataIncomes = dataIncomes.replace('{id}', income[0].id);
+                            dataIncomes = dataIncomes.replace('{incomedate}', income[0].incomedate);
+                            dataIncomes = dataIncomes.replace('{note}', income[0].note);
+                            dataIncomes = dataIncomes.replace('{money}', income[0].money);
+                        }
+                        incomes.getCategoryIncome().then((categories) => {
+                            let html = '';
 
-                    categories.forEach((category) => {
-                        html += '<option value="' + category.id + '">' + category.name + '</option>';
-                    });
+                            categories.forEach((category) => {
+                                html += '<option value="' + category.id + '">' + category.name + '</option>';
+                            });
+                            dataIncomes = dataIncomes.replace('{item-category}', html);
+                            data = data.replace('{content-main}',dataIncomes);
+                            res.writeHead(200, { 'Content-Type': 'text/html' });
+                            res.write(data);
+                            return res.end();
+                        }).catch((err) => {
+                            console.log(err.message);
+                        });
 
-                    data = data.replace('{item-category}', html)
-                    res.writeHead(200, { 'Content-Type': 'text/html' });
-                    res.write(data);
-                    return res.end();
-                })
+                    }
 
+                });
             }
+        })
 
-        });
     };
 
     editIncome(req, res) {
