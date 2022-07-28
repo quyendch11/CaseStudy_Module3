@@ -88,6 +88,7 @@ class IncomesController {
                         if (err) {
                             console.log("File NotFound!");
                         } else {
+                            
                             //     incomes.getCategoryIncome().then((category) => {
 
                             //     });
@@ -126,20 +127,12 @@ class IncomesController {
                             //             </a>
                             //         </td>
                             //       </tr>`;
-                            incomes.getCategoryIncome().then((categories) => {
-                                let html = '';
-
-                                categories.forEach((category) => {
-                                    /*html */
-                                    html += '<option value="' + category.id + '">' + category.name + '</option>';
-                                });
-
-                                data = data.replace('{content-main}', html)
-                                
+                            
+                                dataIncomes = dataIncomes.replace('{content-main}',data)
                                 res.writeHead(200, { 'Content-Type': 'text/html' });
-                                res.write(data);
+                                res.write(dataIncomes);
                                 return res.end();
-                            })
+                            
                             //         dataIncomes = dataIncomes.replace('{incomesList}', tbody);
                             // data = data.replace("{content-main}", dataIncomes);
                             // res.writeHead(200, { 'Content-type': 'text/html' });
