@@ -62,14 +62,13 @@ class UserController {
         user.password
       );
       if (user && validPassword) {
-        let expires = Date.now() + 60 * 60 * 60 * 24 * 7;
+        let expires = Date.now() + 60 * 60 * 60 * 24;
+        let role = await userModel.getRoleUser(user.id);
         let tokenSession =
-          '{"username":"' +
-          userdata.username +
-          '","password":"' +
-          userdata.password +
+          '{"id":"' +
+          user.id +
           '","role":"' +
-          userdata.email +
+          role[0].name +
           '","expires":' +
           expires +
           "}";

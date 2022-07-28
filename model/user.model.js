@@ -39,5 +39,20 @@ class UserModel {
     let user = _.find(users, (o) => o.username == username);
     return user;
   }
+  getRoleUser(id) {
+    let query = ` select roles.name
+                  from users
+                  join userrole on userrole.user_id = users.id
+                  join roles on roles.id = userrole.role_id where users.id = ${id} ;`;
+    return new Promise((resole, rejeect) => {
+      this.connection.query(query, (err, data) => {
+        if (err) {
+          rejeect(err);
+        } else {
+          resole(data);
+        }
+      });
+    });
+  }
 }
 module.exports = UserModel;

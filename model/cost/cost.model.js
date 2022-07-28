@@ -27,17 +27,15 @@ class Cost {
     });
   }
 
-  createCost(cost, idinput) {
-    let insertQuery = `insert into Costs(costdate, note, money,daylimit,weeklimit,monthlimit,userid,costcategorieid)
-                           VALUES ('${cost.costdate}', '${cost.note}', ${cost.money}, ${cost.daylimit}, ${cost.weeklimit}, ${cost.monthlimit}, ${cost.userid}, ${idinput})`;
-    return new Promise((resolve, reject) => {
-      this.connection.query(insertQuery, (err, data) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve("Insert success");
-        }
-      });
+  createCost(cost) {
+    let insertQuery = `insert into Costs(costdate, note, money, costcategorieid, userid)
+                           VALUES ('${cost.costdate}', '${cost.note}', ${cost.money}, ${cost.costcategorieid}, ${cost.userid})`;
+    this.connection.query(insertQuery, (err, data) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("Insert success");
+      }
     });
   }
 

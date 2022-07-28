@@ -27,7 +27,15 @@ router.post("/register", userController.regiter);
 
 router.post("/login", userController.login);
 
-router.get("/cost", costController.showListPage);
-router.get("/cost/create", costController.showCreatePage);
-
+router.get("/cost", userController.readSession, costController.showListPage);
+router.get(
+  "/cost/create",
+  userController.readSession,
+  costController.showCreatePage
+);
+router.get(
+  "/cost/delete/:id",
+  userController.readSession,
+  costController.deleteCost
+);
 module.exports = router;

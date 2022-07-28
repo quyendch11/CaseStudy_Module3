@@ -20,20 +20,21 @@
                     </div>
 
                     <!--begin::Form-->
-                    <form class="m-form m-form--fit m-form--label-align-right" action="cost" method="post">
+                    <form class="m-form m-form--fit m-form--label-align-right" action="/cost/create" method="post">
                         <div class="m-portlet__body">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group m-form__group">
                                         <label for="exampleInputEmail1">Ngày</label>
                                         <input class="form-control m-input" type="date" value="2011-08-19"
-                                            id="example-date-input">
+                                            id="example-date-input" name="costdate">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group m-form__group">
                                         <label for="exampleInputPassword1">Tiền chi</label>
-                                        <input type="text" class="form-control m-input" id="exampleInputPassword1">
+                                        <input type="text" class="form-control m-input" id="exampleInputPassword1"
+                                            name="money">
                                     </div>
                                 </div>
                             </div>
@@ -41,38 +42,17 @@
                                 <div class="col-md-6">
                                     <div class="form-group m-form__group">
                                         <label for="exampleInputEmail1">Danh mục</label>
-                                        <select class="form-control m-input" id="exampleSelect1">
-                                            <option>1</option>
+                                        <select class="form-control m-input" id="exampleSelect1" name="costCategorieid">
+                                            {option}
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-group m-form__group">
-                                        <label for="exampleInputPassword1">Hạn mức ngày</label>
-                                        <input type="text" class="form-control m-input" id="exampleInputPassword1">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mt-5">
-                                <div class="col-md-6">
-                                    <div class="form-group m-form__group">
-                                        <label for="exampleInputEmail1">Hạn mức tuần</label>
-                                        <input type="text" class="form-control m-input" id="exampleInputPassword1">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group m-form__group">
-                                        <label for="exampleInputPassword1">Hạn mức tháng</label>
-                                        <input type="text" class="form-control m-input" id="exampleInputPassword1">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mt-5">
-                                <div class="col-md-12">
 
                                     <div class="form-group m-form__group">
                                         <label for="exampleTextarea">Ghi chú</label>
-                                        <textarea class="form-control m-input" id="exampleTextarea" rows="3"></textarea>
+                                        <textarea class="form-control m-input" id="exampleTextarea" rows="3"
+                                            name="note"></textarea>
                                     </div>
                                 </div>
                             </div>
