@@ -13,46 +13,141 @@ class IncomesController {
                 console.log(err);
             }
             else {
-                let incomesList = await incomes.getIncomesList()
-                let tbody = ''
+                fs.readFile(
+                    "view/client/income/income.index.html",
+                    "utf-8",
+                    async (err, dataIncomes) => {
+                        if (err) {
+                            console.log("File NotFound!");
+                        } else {
+                            let incomesList = await incomes.getIncomesList()
 
-                incomesList.map((incomes, index) => {
-                    tbody += /*html*/`</tr>
-                    <td>${index + 1}</td>
-                    <td>${incomes.note}</td>
-                    <td>${incomes.money}</td>
-                    <td>${incomes.incomedate}</td>
-                    <td><a href="/incomesList/edit/${incomes.id}" class="btn btn-primary">Edit</a></td>
-                    <td ><a href="/incomesList/delete/${incomes.id}" class="btn btn-danger" >Delete</a></td>
-                  </tr>`
-                });
-                data = data.replace('{incomesList}', tbody);
-                res.writeHead(200, { 'Content-type': 'text/html' });
-                res.write(data);
-                res.end();
+                            let tbody = "";
+                            for (let index = 0; index < incomesList.length; index++) {
+                                tbody += /*html */ `
+                          <tr role="row" class="odd active">
+                            <td class=" dt-right" tabindex="0">
+                            <label
+                              class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                              <input type="checkbox" value="" class="m-checkable">
+                              <span></span>
+                            </label>
+                            </td>
+                            <td>${index + 1}</td>
+                            <td>${incomesList[index].incomedate}</td>
+                            <td>${incomesList[index].note}</td>
+                            <td>${incomesList[index].money}</td>
+                            <td nowrap="">
+                                <a href="#"
+                                    class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"
+                                    title="View">
+                                    <i class="la la-edit"></i>
+                                </a>
+                                <a href="#"
+                                    class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"
+                                    title="View">
+                                    <i class="flaticon-close"></i>
+                                </a>
+                            </td>
+                          </tr>`;
+                            }
+
+                            // incomesList.map((incomes, index) => {
+                            //     tbody += /*html*/`</tr>
+                            //     <td>${index + 1}</td>
+                            //     <td>${incomes.note}</td>
+                            //     <td>${incomes.money}</td>
+                            //     <td>${incomes.incomedate}</td>
+                            //     <td><a href="/incomesList/edit/${incomes.id}" class="btn btn-primary">Edit</a></td>
+                            //     <td ><a href="/incomesList/delete/${incomes.id}" class="btn btn-danger" >Delete</a></td>
+                            //   </tr>`
+                            // });
+                            dataIncomes = dataIncomes.replace('{incomesList}', tbody);
+
+                            data = data.replace("{content-main}", dataIncomes);
+                            res.writeHead(200, { 'Content-type': 'text/html' });
+                            res.write(data);
+                            res.end();
+                        }
+                    }
+                );
             }
-        })
+        });
     }
 
     showIncomesForm(req, res) {
-        fs.readFile('view/client/income/create.html', 'utf-8', (err, data) => {
+        fs.readFile("view/client/index.html", 'utf-8', (err, data) => {
             if (err) {
                 console.log(err);
             }
             else {
+                fs.readFile(
+                    "view/client/income/create.html",
+                    "utf-8",
+                    (err, dataIncomes) => {
+                        if (err) {
+                            console.log("File NotFound!");
+                        } else {
+                            //     incomes.getCategoryIncome().then((category) => {
 
-                incomes.getCategoryIncome().then((categories) => {
-                    let html = '';
+                            //     });
 
-                    categories.forEach((category) => {
-                        html += '<option value="' + category.id + '">' + category.name + '</option>';
-                    });
+                            //     data = data.replace('{item-category}', html)
+                            //     res.writeHead(200, { 'Content-Type': 'text/html' });
+                            //     res.write(data);
+                            //     return res.end();
+                            // }
 
-                    data = data.replace('{item-category}', html)
-                    res.writeHead(200, { 'Content-Type': 'text/html' });
-                    res.write(data);
-                    return res.end();
-                })
+                            //         let tbody = "";
+                            //         for (let index = 0; index < incomesList.length; index++) {
+                            //             tbody += /*html */ `
+                            //       <tr role="row" class="odd active">
+                            //         <td class=" dt-right" tabindex="0">
+                            //         <label
+                            //           class="m-checkbox m-checkbox--single m-checkbox--solid m-checkbox--brand">
+                            //           <input type="checkbox" value="" class="m-checkable">
+                            //           <span></span>
+                            //         </label>
+                            //         </td>
+                            //         <td>${index + 1}</td>
+                            //         <td>${incomesList[index].incomedate}</td>
+                            //         <td>${incomesList[index].note}</td>
+                            //         <td>${incomesList[index].money}</td>
+                            //         <td nowrap="">
+                            //             <a href="#"
+                            //                 class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"
+                            //                 title="View">
+                            //                 <i class="la la-edit"></i>
+                            //             </a>
+                            //             <a href="#"
+                            //                 class="m-portlet__nav-link btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill"
+                            //                 title="View">
+                            //                 <i class="flaticon-close"></i>
+                            //             </a>
+                            //         </td>
+                            //       </tr>`;
+                            incomes.getCategoryIncome().then((categories) => {
+                                let html = '';
+
+                                categories.forEach((category) => {
+                                    /*html */
+                                    html += '<option value="' + category.id + '">' + category.name + '</option>';
+                                });
+
+                                data = data.replace('{content-main}', html)
+                                
+                                res.writeHead(200, { 'Content-Type': 'text/html' });
+                                res.write(data);
+                                return res.end();
+                            })
+                            //         dataIncomes = dataIncomes.replace('{incomesList}', tbody);
+                            // data = data.replace("{content-main}", dataIncomes);
+                            // res.writeHead(200, { 'Content-type': 'text/html' });
+
+
+                        }
+                    }
+                );
             }
         });
     };
