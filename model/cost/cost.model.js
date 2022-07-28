@@ -64,7 +64,7 @@ class Cost {
     });
   }
   updateCost(id, cost) {
-    let query = `update costs set costdate = '${cost.costdate}', note = '${cost.note}', money= ${cost.money}, daylimit= ${cost.daylimit}, weeklimit= ${cost.weeklimit}, monthlimit= ${cost.monthlimit}, userid= ${cost.userid} where id= ${id}`;
+    let query = `update costs set costdate = '${cost.costdate}', note = '${cost.note}', money= ${cost.money}, userid= ${cost.userid} where id = ${id}`;
     this.connection.query(query, (err, data) => {
       if (err) {
         console.log(err);
@@ -86,7 +86,7 @@ class Cost {
       });
     });
   }
-
+  updatePage() {}
   deleteCost(id) {
     let query = `delete from Costs where id = ${id}`;
     return new Promise((resolve, reject) => {

@@ -20,13 +20,13 @@
                     </div>
 
                     <!--begin::Form-->
-                    <form class="m-form m-form--fit m-form--label-align-right" action="/cost/create" method="post">
+                    <form class="m-form m-form--fit m-form--label-align-right" action="/cost/update/{id}" method="post">
                         <div class="m-portlet__body">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group m-form__group">
                                         <label for="exampleInputEmail1">Ngày</label>
-                                        <input class="form-control m-input" type="date" value="2011-08-19"
+                                        <input class="form-control m-input" type="date" value="{costdate}"
                                             id="example-date-input" name="costdate">
                                     </div>
                                 </div>
@@ -34,7 +34,7 @@
                                     <div class="form-group m-form__group">
                                         <label for="exampleInputPassword1">Tiền chi</label>
                                         <input type="text" class="form-control m-input" id="exampleInputPassword1"
-                                            name="money">
+                                            name="money" value="${money}">
                                     </div>
                                 </div>
                             </div>
@@ -51,8 +51,8 @@
 
                                     <div class="form-group m-form__group">
                                         <label for="exampleTextarea">Ghi chú</label>
-                                        <textarea class="form-control m-input" id="exampleTextarea" rows="3"
-                                            name="note"></textarea>
+                                        <textarea class="form-control m-input" id="exampleTextarea" rows="3" name="note"
+                                            value="{note@}"></textarea>
                                     </div>
                                 </div>
                             </div>

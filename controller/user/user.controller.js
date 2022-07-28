@@ -62,7 +62,7 @@ class UserController {
         user.password
       );
       if (user && validPassword) {
-        let expires = Date.now() + 60 * 60 * 60 * 24;
+        let expires = Date.now() + 60 * 60 * 60 * 24 * 7;
         let role = await userModel.getRoleUser(user.id);
         let tokenSession =
           '{"id":"' +
