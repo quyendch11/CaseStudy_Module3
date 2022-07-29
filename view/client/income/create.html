@@ -13,28 +13,28 @@
                                     <i class="la la-gear"></i>
                                 </span>
                                 <h3 class="m-portlet__head-text">
-                                    Tiền chi
+                                    Tiền thu
                                 </h3>
                             </div>
                         </div>
                     </div>
 
                     <!--begin::Form-->
-                    <form class="m-form m-form--fit m-form--label-align-right" action="/cost/create" method="post">
+                    <form class="m-form m-form--fit m-form--label-align-right" action="/incomesList/create"
+                        method="post">
                         <div class="m-portlet__body">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group m-form__group">
                                         <label for="exampleInputEmail1">Ngày</label>
-                                        <input class="form-control m-input" type="date" value="2011-08-19"
-                                            id="example-date-input" name="costdate">
+                                        <input class="form-control m-input" type="date" name="incomedate"
+                                            id="incomedate">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group m-form__group">
-                                        <label for="exampleInputPassword1">Tiền chi</label>
-                                        <input type="text" class="form-control m-input" id="exampleInputPassword1"
-                                            name="money">
+                                        <label for="exampleTextarea">Tên khoản thu</label>
+                                        <input class="form-control m-input" id="note" name="note"></input>
                                     </div>
                                 </div>
                             </div>
@@ -42,24 +42,24 @@
                                 <div class="col-md-6">
                                     <div class="form-group m-form__group">
                                         <label for="exampleInputEmail1">Danh mục</label>
-                                        <select class="form-control m-input" id="exampleSelect1" name="costCategorieid">
-                                            {option}
+                                        <select class="form-control m-input" id="incomeCategorieid"
+                                            name="incomeCategorieid">
+                                            {item-category}
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-
                                     <div class="form-group m-form__group">
-                                        <label for="exampleTextarea">Ghi chú</label>
-                                        <input class="form-control m-input" id="exampleTextarea" name="note"></input>
+                                        <label for="exampleInputPassword1">Số tiền(VND)</label>
+                                        <input type="text" class="form-control m-input" id="money" name="money">
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="m-portlet__foot m-portlet__foot--fit">
                             <div class="m-form__actions">
-                                <button type="submit" class="btn btn-primary">Nhập khoản chi</button>
-                                <button type="reset" class="btn btn-secondary">Hủy</button>
+                                <button type="submit" class="btn btn-primary">Thêm khoản thu</button>
+                                <a href="/incomesList" type="reset" class="btn btn-secondary">Hủy</a>
                             </div>
                         </div>
                     </form>

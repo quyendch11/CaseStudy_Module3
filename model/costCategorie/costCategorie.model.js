@@ -36,6 +36,7 @@ class costcategories {
     });
   }
   createCostCate(cost) {
+    console.log("object", cost);
     let insertQuery = `insert into CostCategories(name)
                            VALUES ('${cost.name}')`;
     this.connection.query(insertQuery, (err, data) => {
@@ -46,10 +47,18 @@ class costcategories {
       }
     });
   }
-
+  update(id, cost) {
+    let query = `update CostCategories set name = '${cost.name}' where id = ${id}`;
+    this.connection.query(query, (err, data) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("Update success");
+      }
+    });
+  }
   deleteCostCategories(id) {
     let query = `delete from CostCategories where id = ${id}`;
-
     this.connection.query(query, (err, data) => {
       if (err) {
         console.log(err);

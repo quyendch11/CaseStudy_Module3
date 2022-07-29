@@ -33,6 +33,22 @@ class UserModel {
         console.log("Insert success");
       }
     });
+    let query = `SELECT * FROM users where username='${user.username}'`;
+    this.connection.query(query, (err, datarole) => {
+      if (err) {
+        console.log(err);
+      } else {
+        let queryrole = `INSERT INTO userrole(role_id, user_id)
+        VALUE('2',${datarole[0].id})`;
+        this.connection.query(queryrole, (err, data) => {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log("Insert success");
+          }
+        });
+      }
+    });
   }
   async findUserByUsername(username) {
     let users = await this.getAll();

@@ -1,6 +1,7 @@
 const fs = require("fs");
 const qs = require("qs");
 const UserModel = require("../../model/user.model");
+const _ = require("lodash");
 let bcrypt = require("bcrypt");
 var cookie = require("cookie");
 const userModel = new UserModel();
@@ -45,6 +46,7 @@ class UserController {
         password: hashed,
       };
       userModel.create(user);
+      res.writeHead(301, { location: "/login" });
       res.end();
     });
   }
@@ -64,15 +66,21 @@ class UserController {
       if (user && validPassword) {
         let expires = Date.now() + 60 * 60 * 60 * 24 * 7;
         let role = await userModel.getRoleUser(user.id);
-        let tokenSession =
-          '{"id":"' +
-          user.id +
-          '","role":"' +
-          role[0].name +
-          '","expires":' +
-          expires +
-          "}";
-        fs.writeFile("token/" + expires + ".txt", tokenSession, (err) => {
+        let token = JSON.parse(
+          fs.readFileSync("token/token.json", {
+            encoding: "utf8",
+            flag: "r",
+          })
+        );
+        let tokenSession = {
+          id: user.id,
+          role: role[0].name,
+          expires: expires,
+        };
+        // '{"id":"' +user.id +'","role":"' +role[0].name +'","expires":' +expires +"}";
+        token.push(tokenSession);
+        console.log(token);
+        fs.writeFile("token/token.json", JSON.stringify(token), (err) => {
           console.log(err);
           res.setHeader(
             "Set-Cookie",
@@ -86,13 +94,26 @@ class UserController {
       }
     });
   }
+
   logout(req, res) {
     let cookies = cookie.parse(req.headers.cookie || "");
-    let fileName = "token/" + cookies.Token + ".txt";
-    fs.unlink(fileName, (err) => {
-      if (err) throw err;
-      console.log("File deleted!");
+    // let fileName = "token/" + cookies.Token + ".txt";
+    fs.readFile("token/token.json", "utf8", (err, data) => {
+      if (err) {
+        console.error("error" + err.message);
+        return;
+      }
+      let newUserCookies = _.filter(JSON.parse(data), (o) =>
+        o.expires != cookies.Token ? o.expires : ""
+      );
+      fs.writeFileSync("token/token.json", JSON.stringify(newUserCookies));
     });
+
+    // console.log(newUserCookies);
+    // fs.unlink(fileName, (err) => {
+    //   if (err) throw err;
+    //   console.log("File deleted!");
+    // });
     res.writeHead(301, { location: "/login" });
     res.end();
   }
@@ -101,13 +122,15 @@ class UserController {
     if (cookies.Token) {
       var sessionString = "";
       let expires = 0;
-      fs.readFile("token/" + cookies.Token + ".txt", "utf8", (err, data) => {
+      fs.readFile("token/token.json", "utf8", (err, data) => {
         if (err) {
           console.error("error" + err.message);
           return;
         }
-        sessionString = String(data);
-        expires = JSON.parse(sessionString).expires;
+        let user = _.find(JSON.parse(data), (o) => o.expires == cookies.Token);
+        if (user) {
+          expires = user.expires;
+        }
         var now = Date.now();
         if (now < expires) {
           next();

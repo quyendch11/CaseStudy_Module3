@@ -2,6 +2,7 @@ const fs = require("fs");
 const qs = require("qs");
 const Cost = require("../../model/cost/cost.model");
 var cookie = require("cookie");
+const _ = require("lodash");
 const costcategories = require("../../model/costCategorie/costCategorie.model");
 const UserController = require("../user/user.controller");
 const costModel = new Cost();
@@ -132,71 +133,65 @@ class CostController {
     let cookies = cookie.parse(req.headers.cookie || "");
     let userid = "";
     if (cookies.Token) {
-      await fs.readFile(
-        "token/" + cookies.Token + ".txt",
-        "utf8",
-        (err, data) => {
-          if (err) {
-            console.error("error" + err.message);
-          }
-          userid = JSON.parse(data).id;
-          let dataCost = "";
-          req.on("data", (chunk) => {
-            dataCost += chunk;
-          });
-          req.on("end", () => {
-            let cost = qs.parse(dataCost);
-            let newCost = {
-              costdate: cost.costdate,
-              note: cost.note,
-              money: cost.money,
-              costcategorieid: cost.costCategorieid,
-              userid: userid,
-            };
-            console.log(newCost, idedit);
-            costModel.updateCost(idedit, newCost);
-            res.writeHead(301, {
-              location: "/cost",
-            });
-            return res.end();
-          });
+      await fs.readFile("token/token.json", "utf8", (err, data) => {
+        if (err) {
+          console.error("error" + err.message);
         }
-      );
+        let user = _.find(JSON.parse(data), (o) => o.expires == cookies.Token);
+        userid = user.id;
+        let dataCost = "";
+        req.on("data", (chunk) => {
+          dataCost += chunk;
+        });
+        req.on("end", () => {
+          let cost = qs.parse(dataCost);
+          let newCost = {
+            costdate: cost.costdate,
+            note: cost.note,
+            money: cost.money,
+            costcategorieid: cost.costCategorieid,
+            userid: userid,
+          };
+          console.log(newCost, idedit);
+          costModel.updateCost(idedit, newCost);
+          res.writeHead(301, {
+            location: "/cost",
+          });
+          return res.end();
+        });
+      });
     }
   }
   async createCosts(req, res) {
     let cookies = cookie.parse(req.headers.cookie || "");
     let userid = "";
     if (cookies.Token) {
-      await fs.readFile(
-        "token/" + cookies.Token + ".txt",
-        "utf8",
-        (err, data) => {
-          if (err) {
-            console.error("error" + err.message);
-          }
-          userid = JSON.parse(data).id;
-          let dataCost = "";
-          req.on("data", (chunk) => {
-            dataCost += chunk;
-          });
-          req.on("end", () => {
-            let cost = qs.parse(dataCost);
-            let newCost = {
-              costdate: cost.costdate,
-              note: cost.note,
-              money: cost.money,
-              costcategorieid: cost.costCategorieid,
-              userid: userid,
-            };
-            costModel.createCost(newCost);
-            res.writeHead(301, {
-              location: "/cost",
-            });
-            return res.end();
-          });
+      await fs.readFile("token/token.json", "utf8", (err, data) => {
+        if (err) {
+          console.error("error" + err.message);
         }
-      );
+        let user = _.find(JSON.parse(data), (o) => o.expires == cookies.Token);
+        userid = user.id;
+        let dataCost = "";
+        req.on("data", (chunk) => {
+          dataCost += chunk;
+        });
+        req.on("end", () => {
+          let cost = qs.parse(dataCost);
+          let newCost = {
+            costdate: cost.costdate,
+            note: cost.note,
+            money: cost.money,
+            costcategorieid: cost.costCategorieid,
+            userid: userid,
+          };
+          costModel.createCost(newCost);
+          res.writeHead(301, {
+            location: "/cost",
+          });
+          return res.end();
+        });
+      });
     }
   }
   async deleteCost(req, res) {
