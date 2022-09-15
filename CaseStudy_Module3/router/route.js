@@ -18,19 +18,19 @@ router.get("/", homeController.showHomePage);
 router.get("/dashboard", dashboardController.showPage);
 
 // 404 not found
-router.get("/notfound",notfound_404.showError404Page);
+router.get("/notfound", notfound_404.showError404Page);
 
 // show userList
-router.get("/user",userController.showUserListPage);
+router.get("/user", userController.showUserListPage);
 
 // router.get("/user/:id",userController.showDeletePage);
 
-router.get("/user/delete/:id",userController.deleteUserById);
+router.get("/user/delete/:id", userController.deleteUserById);
 
-router.get("/user/edit/:id",userController.showUserEdit);
-router.post("/user/edit/:id",userController.editUser);
+router.get("/user/edit/:id", userController.showUserEdit);
 
+router.post("/user/edit/:id", userController.editUser);
 
-router.get("/user/search",userController.searchUser);
+router.get("/user/search", userController.searchUser);
 
 module.exports = router;
